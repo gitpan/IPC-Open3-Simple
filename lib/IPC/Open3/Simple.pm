@@ -19,7 +19,7 @@ use IO::Select;
 use IO::Handle;
 use Data::Dumper;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 #-----------------------------------------------------------------
 #
@@ -115,6 +115,8 @@ sub run {
 
     # wait for child process to die
     waitpid($pid, 0);
+
+    return $self;
 }
 
 1;
