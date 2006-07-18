@@ -1,6 +1,6 @@
 #################################################################
 #
-#   $Id: test-all.t,v 1.1 2006/07/17 14:09:36 erwan Exp $
+#   $Id: test-all.t,v 1.3 2006/07/18 12:40:06 erwan Exp $
 #
 
 use strict;
@@ -15,7 +15,7 @@ BEGIN {
     eval "use IO::Select"; plan skip_all => "IO::Select is required for testing IPC::Open3::Simple" if $@;
     eval "use IO::Handle"; plan skip_all => "IO::Handle is required for testing IPC::Open3::Simple" if $@;
 
-    plan tests => 13;
+    plan tests => 14;
 
     use_ok('IPC::Open3::Simple');
 };
@@ -110,5 +110,8 @@ BEGIN {
 
 {
     # test errors
-    1;
+    eval {
+	my $runner = new IPC::Open3::Simple(out => 'bob');
+    };
+    ok(defined $@ && $@ =~ /expects coderefs/,"argument validation in new()");
 }

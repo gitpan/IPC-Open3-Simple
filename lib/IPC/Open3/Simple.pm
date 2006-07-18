@@ -2,7 +2,7 @@
 #
 #   IPC::Open3::Simple - A simple alternative to IPC::Open3
 #
-#   $Id: Simple.pm,v 1.4 2006/07/17 14:12:34 erwan Exp $
+#   $Id: Simple.pm,v 1.6 2006/07/18 12:40:06 erwan Exp $
 #
 #   060714 erwan Created
 #
@@ -19,7 +19,7 @@ use IO::Select;
 use IO::Handle;
 use Data::Dumper;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 #-----------------------------------------------------------------
 #
@@ -66,7 +66,7 @@ sub run {
     my $child_in = \*CHILD_IN;
     my $child_out = \*CHILD_OUT;
     my $child_err = \*CHILD_ERR;
-    $child_in->autoflush;
+#    $child_in->autoflush; IPC::Open3 does it already
     $child_out->autoflush;
     $child_err->autoflush;
 
@@ -127,7 +127,7 @@ IPC::Open3::Simple - A simple alternative to IPC::Open3
 
 =head1 VERSION
 
-$Id: Simple.pm,v 1.4 2006/07/17 14:12:34 erwan Exp $
+$Id: Simple.pm,v 1.6 2006/07/18 12:40:06 erwan Exp $
 
 =head1 SYNOPSIS
 
@@ -145,14 +145,16 @@ and stderr:
 
 =head1 DESCRIPTION
 
-When you want to run a process and parse its stdout/stderr or feed its
+IPC::Open3::Simple aims at making it very easy to start a shell command, eventually
+feed its stdin with some data, then retrieve its stdout and stderr separately.
+
+When you want to run a shell command and parse its stdout/stderr or feed its
 stdin, you often end up using IPC::Run, IPC::Cmd or IPC::Open3 with your
-own parsing code. Those alternatives lack simplicity.
+own parsing code, and end up writing more code than you intended.
+IPC::Open3::Simple is about removing this overhead and making IPC::Open3 
+easier to use.
 
-IPC::Open3::Simple offers an alternative interface to running shell
-commands within a perl script, and hopefuly one that is easier to use.
-
-IPC::Open3::Simple simply calls IPC::Open3 and redirects stdin, stdout
+IPC::Open3::Simple calls IPC::Open3 and redirects stdin, stdout
 and stderr to some function references passed in argument to the constructor.
 It does a select on the input/output filehandles returned by IPC::Open3
 and dispatches their content to and from those functions.
@@ -208,7 +210,7 @@ Open3 failed to run the command passed in I<@cmds> to I<run>.
 No bugs so far.
 
 Limitation: IPC::Open3::Simple is not designed for interactive interprocess communication.
-Do not use it to steer the process opened by I<open3> via stdin/atdout/stderr, use fork and pipes
+Do not use it to steer the process opened by I<open3> via stdin/stdout/stderr, use fork and pipes
 or some appropriate IPC module for that. IPC::Open3::Simple's scope is to easily run a command,
 eventually with some stdin input, and get its stdout and stderr along the way, not to interactively
 communicate with the command.
@@ -219,7 +221,7 @@ See IPC::Open3, IPC::Run, IPC::Cmd.
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2005 by Erwan Lemonnier C<< <erwan@cpan.org> >>
+Copyright (C) by Erwan Lemonnier C<< <erwan@cpan.org> >>
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.
