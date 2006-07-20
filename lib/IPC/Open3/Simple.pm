@@ -2,7 +2,7 @@
 #
 #   IPC::Open3::Simple - A simple alternative to IPC::Open3
 #
-#   $Id: Simple.pm,v 1.6 2006/07/18 12:40:06 erwan Exp $
+#   $Id: Simple.pm,v 1.7 2006/07/20 13:30:02 erwan Exp $
 #
 #   060714 erwan Created
 #
@@ -19,7 +19,7 @@ use IO::Select;
 use IO::Handle;
 use Data::Dumper;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 #-----------------------------------------------------------------
 #
@@ -129,7 +129,7 @@ IPC::Open3::Simple - A simple alternative to IPC::Open3
 
 =head1 VERSION
 
-$Id: Simple.pm,v 1.6 2006/07/18 12:40:06 erwan Exp $
+$Id: Simple.pm,v 1.7 2006/07/20 13:30:02 erwan Exp $
 
 =head1 SYNOPSIS
 
